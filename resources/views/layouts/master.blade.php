@@ -41,7 +41,7 @@
     
     	<!-- LOGO -->    
     	<div class="logo-container">
-        	<a href="index.html"><img src="img/logo.png" alt="logo" ></a>
+        	<a href="{{ url('/') }}"><img src="img/logo.png" alt="logo" ></a>
             <div class="tada-social">
             	<a href="#"><i class="icon-facebook5"></i></a>
                 <a href="#"><i class="icon-twitter4"></i></a>
@@ -57,11 +57,11 @@
     
             <ul class="tada-menu">
                 @foreach($categories as $item_categories)
-                     <li><a href="#" class="active">{!! $item_categories->name !!} <i class="icon-arrow-down8"></i></a>
+                     <li><a href="" class="active">{!! $item_categories->name !!} <i class="icon-arrow-down8"></i></a>
                         <ul class="submenu">
                             <?php $menu_level_2 = DB::table('categories')->where('parent_id',$item_categories->id)->get() ?>
                             @foreach($menu_level_2 as $item_menu_level_2)
-                        	<li><a href="#">{!! $item_menu_level_2->name !!}</a></li>
+                        	<li><a href="{!! url('list',[$item_categories->id,$item_categories->slug]) !!}">{!! $item_menu_level_2->name !!}</a></li>
                             @endforeach
                         </ul>
                     </li>
@@ -85,7 +85,7 @@
                             <ul class="submenu">
                                 <?php $menu_level_2 = DB::table('categories')->where('parent_id',$item_categories->id)->get() ?>
                                 @foreach($menu_level_2 as $item_menu_level_2)
-                            	   <li><a href="home-1-column.html">{!! $item_menu_level_2->name !!}</a></li>
+                            	   <li><a href="{!! url('list',[$item_categories->id,$item_categories->slug]) !!}">{!! $item_menu_level_2->name !!}</a></li>
                                 @endforeach                                                                   
                             </ul>
                         </li>

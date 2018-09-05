@@ -67,7 +67,7 @@
 		        </div>
 		        <div class="post-text">
 		        	<span class="date">{{ $item_post->created_at }}</span>
-		            <h2><a href="#">{{ $item_post->title }}</a></h2>
+		            <h2><a href="{!! url('detail',[$item_post->id,$item_post->slug]) !!}">{{ $item_post->title }}</a></h2>
 		            <p class="text">
 		            	{!! $item_post->description !!}
 		                <a href="#"><i class="icon-arrow-right2"></i></a>
@@ -87,12 +87,15 @@
 		    </article>
 		@endforeach
 	@endif          
-
-
 	<!-- NAVIGATION -->
 	<div class="navigation">
-    	<a href="#" class="prev"><i class="icon-arrow-left8"></i> Previous Posts</a>
-        <a href="#" class="next">Next Posts <i class="icon-arrow-right8"></i></a>
+        @if($post->currentPage() != 1)
+    	   <a href="{{ str_replace('/?','?',$post->url($post->currentPage() - 1)) }}" class="prev"><i class="icon-arrow-left8"></i> Previous Posts</a>
+        @endif
+
+        @if($post->currentPage() != $post->lastPage())
+            <a href="{{ str_replace('/?','?',$post->url($post->currentPage() + 1)) }}" class="next">Next Posts <i class="icon-arrow-right8"></i></a>
+        @endif
         <div class="clearfix"></div>
     </div>
 
@@ -122,43 +125,16 @@
         	Latest Posts
         </h3>
         <div class="posts-container">
-        
-        	<div class="item">
-            	<img src="img/latest-posts-1.jpg" alt="post 1" class="post-image">
-                <div class="info-post">
-                	<h5><a href="#">MAECENAS <br> CONSECTETUR</a></h5>
-                	<span class="date">07 JUNE 2016</span>	
-                </div> 
-                <div class="clearfix"></div>   
-            </div>
-
-        	<div class="item">
-            	<img src="img/latest-posts-2.jpg" alt="post 2" class="post-image">
-                <div class="info-post">
-                	<h5><a href="#">MAURIS SIT AMET</a></h5>
-                	<span class="date">06 JUNE 2016</span>                       	
-                </div> 
-                <div class="clearfix"></div>   
-            </div>
-
-        	<div class="item">
-            	<img src="img/latest-posts-3.jpg" alt="post 3" class="post-image">
-                <div class="info-post">
-                	<h5><a href="#">NAM EGET <br> PULVINAR ANTE</a></h5>
-                	<span class="date">05 JUNE 2016</span>                        	
-                </div> 
-                <div class="clearfix"></div>   
-            </div>
-
-        	<div class="item">
-            	<img src="img/latest-posts-4.jpg" alt="post 4" class="post-image">
-                <div class="info-post">
-                	<h5><a href="#">VIVAMUS ET TURPIS LACINIA</a></h5>
-                	<span class="date">04 JUNE 2016</span>                     	
-                </div>    
-                <div class="clearfix"></div>
-            </div>
-            
+            @foreach($last_posts as $item_last_posts)
+            	<div class="item">
+                	<img style="width: 100px; height: 100px" src="{!! $item_last_posts->thumbnail !!}" alt="post 1" class="post-image">
+                    <div class="info-post">
+                    	<h5><a href="#">{!! $item_last_posts->title !!}</a></h5>
+                    	<span class="date">{{ $item_last_posts->created_at }}</span>	
+                    </div> 
+                    <div class="clearfix"></div>   
+                </div>
+            @endforeach
             <div class="clearfix"></div>
         </div>
     </div>

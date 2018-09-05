@@ -12,6 +12,7 @@
 */
 
 Route::get('/','HomeController@index');
-Route::get('detail',function(){
-	return view('posts.detail');
-});
+
+Route::get('list/{id}/{slug}','HomeController@list');
+
+Route::get('detail/{id}/{slug}','HomeController@detail');
